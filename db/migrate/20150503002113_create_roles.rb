@@ -4,6 +4,7 @@ class CreateRoles < ActiveRecord::Migration
       t.belongs_to :film, index: true
       t.belongs_to :filmmaker, index: true
       t.string :credit
+      t.boolean :cast
       t.timestamps null: false
     end
   end

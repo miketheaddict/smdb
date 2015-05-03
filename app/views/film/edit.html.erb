@@ -1,2 +1,15 @@
-<h1>Film#edit</h1>
-<p>Find me in app/views/film/edit.html.erb</p>
+<%= link_to("<< Back to View", {:action => 'view', :id => @film.id}, :class => 'back-link') %>
+<%= link_to("Remove", {:action => 'remove', :id => @film.id}, :class => 'action remove') %>
+    <div class="films edit">
+      <h2>Edit <%= @film.title + "(" + @film.year.to_s + ")"%></h2>
+
+      <%= form_for(:film, :url => {:action => 'update', :id => @film.id}) do |f| %>
+
+        <%= render(:partial => "form", :locals => {:f => f}) %>
+
+        <div class="form-buttons">
+          <%= submit_tag("Update Film") %>
+        </div>
+
+      <% end %>
+    </div> 

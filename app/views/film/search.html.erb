@@ -1,2 +1,17 @@
-<h1>Film#search</h1>
-<p>Find me in app/views/film/search.html.erb</p>
+<% @page_title = "Films" %>
+<div class="films search">
+      <h2>Films</h2>
+
+      <%= link_to(image_tag('plus_sign.png', :size=>'11x11', :alt => '+') + " Add New Film", {:action => 'add'}, :class => 'action add') %>
+
+      <table class="listing" summary="film list">
+        <tr class="header">
+          <th>Film</th>
+        </tr>
+        <% @films.each do |film| %>
+        <tr>
+          <td><%= link_to(film.title + "(" + film.year.to_s + ")", {:action => 'view' , :id => film.id},  :class => 'action view') %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div> 

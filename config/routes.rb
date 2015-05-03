@@ -1,13 +1,9 @@
 Rails.application.routes.draw do
-  get 'film/search'
 
-  get 'film/show'
+  root "film#search"
+  get "film/search"
 
-  get 'film/add'
-
-  get 'film/remove'
-
-  get 'film/edit'
+  match ':controller(/:action(/:id))', :via => [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

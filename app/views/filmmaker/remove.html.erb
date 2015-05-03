@@ -1,2 +1,21 @@
-<h1>Filmmaker#remove</h1>
-<p>Find me in app/views/filmmaker/remove.html.erb</p>
+    <%= link_to("<< Back to Edit",{:action => 'edit' , :id => @filmmaker.id}, :class => 'action edit') %>
+
+    <div class="filmmakers show">
+      <h2><%= @filmmaker.firstName + " " + @filmmaker.lastName %></h2>
+
+      <table summary="Filmmaker detail view">
+        <tr>
+          <th>Bio</th>
+          <td><%= @filmmaker.bio %></td>
+        </tr>
+      </table>
+
+    </div>
+    
+    <%= form_for(:filmmaker,:url => {:action => 'destroy', :id => @filmmaker.id}) do |f| %>
+
+      <div class="form-buttons">
+        <%= submit_tag("Delete Filmmaker From Database?") %>
+      </div>
+
+    <% end %>

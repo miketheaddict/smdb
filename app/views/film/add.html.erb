@@ -1,2 +1,14 @@
-<h1>Film#add</h1>
-<p>Find me in app/views/film/add.html.erb</p>
+<%= link_to("<< Back to Search", {:action => 'search'}, :class => 'back-link') %>
+
+<div class="films new">
+  <h2>Add Films</h2>
+
+  <%= form_for(:film, :url => {:action => 'create'}) do |f| %>
+    <%= render(:partial => "form", :locals => {:f => f}) %>
+
+    <div class="form-buttons">
+      <%= submit_tag("Add Film") %>
+    </div>
+
+  <% end %>
+</div> 

@@ -1,2 +1,14 @@
-<h1>Filmmaker#add</h1>
-<p>Find me in app/views/filmmaker/add.html.erb</p>
+<%= link_to("<< Back to Search", {:action => 'search'}, :class => 'back-link') %>
+
+<div class="filmmaker new">
+  <h2>Add Filmmaker</h2>
+
+  <%= form_for(:filmmaker, :url => {:action => 'create'}) do |f| %>
+    <%= render(:partial => "form", :locals => {:f => f}) %>
+
+    <div class="form-buttons">
+      <%= submit_tag("Add Filmmaker") %>
+    </div>
+
+  <% end %>
+</div> 

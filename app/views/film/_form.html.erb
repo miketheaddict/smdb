@@ -1,0 +1,17 @@
+<table summary="Film form fields">
+
+  <%= error_messages_for(@film) %>
+
+  <tr>
+    <th><%= f.label(:title, "Title") %></th>
+    <td><%= f.text_field(:title) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:year) %></th>
+    <td><%= f.number_field(:year, step: 1) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:synopsis) %></th>
+    <td><%= f.text_area(:synopsis, :size => "50x30") %></td>
+  </tr>
+</table>

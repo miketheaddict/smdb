@@ -1,2 +1,15 @@
-<h1>Filmmaker#edit</h1>
-<p>Find me in app/views/filmmaker/edit.html.erb</p>
+<%= link_to("<< Back to View", {:action => 'view', :id => @filmmaker.id}, :class => 'back-link') %>
+<%= link_to("Remove", {:action => 'remove', :id => @filmmaker.id}, :class => 'action remove') %>
+    <div class="filmmakers edit">
+      <h2>Edit <%= @filmmaker.firstName + " " + @filmmaker.lastName %></h2>
+
+      <%= form_for(:filmmaker, :url => {:action => 'update', :id => @filmmaker.id}) do |f| %>
+
+        <%= render(:partial => "form", :locals => {:f => f}) %>
+
+        <div class="form-buttons">
+          <%= submit_tag("Update Filmmaker") %>
+        </div>
+
+      <% end %>
+    </div> 

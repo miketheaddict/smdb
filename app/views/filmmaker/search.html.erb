@@ -1,2 +1,17 @@
-<h1>Filmmaker#search</h1>
-<p>Find me in app/views/filmmaker/search.html.erb</p>
+<% @page_title = "Filmmakers" %>
+<div class="filmmakers search">
+      <h2>Filmmakers</h2>
+
+      <%= link_to(image_tag('plus_sign.png', :size=>'11x11', :alt => '+') + " Add New Filmmaker", {:action => 'add'}, :class => 'action add') %>
+
+      <table class="listing" summary="filmmaker list">
+        <tr class="header">
+          <th>Filmmaker</th>
+        </tr>
+        <% @filmmakers.each do |filmmaker| %>
+        <tr>
+          <td><%= link_to(filmmaker.firstName + " " + filmmaker.lastName, {:action => 'view' , :id => filmmaker.id},  :class => 'action view') %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div> 

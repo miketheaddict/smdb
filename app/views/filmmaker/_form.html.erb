@@ -1,0 +1,29 @@
+<table summary="Filmmaker form fields">
+
+  <%= error_messages_for(@filmmaker) %>
+
+  <tr>
+    <th><%= f.label(:firstName, "First Name") %></th>
+    <td><%= f.text_field(:firstName) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:lastName, "Last Name") %></th>
+    <td><%= f.text_field(:lastName) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:birthDate, "Birthdate") %></th>
+    <td><%= f.date_select(:birthDate) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:school, "School") %></th>
+    <td><%= f.text_field(:school) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:year) %></th>
+    <td><%= f.number_field(:year, step: 1) %></td>
+  </tr>
+  <tr>
+    <th><%= f.label(:bio) %></th>
+    <td><%= f.text_area(:bio, :size => "50x30") %></td>
+  </tr>
+</table>

@@ -1,2 +1,21 @@
-<h1>Film#remove</h1>
-<p>Find me in app/views/film/remove.html.erb</p>
+    <%= link_to("<< Back to Edit",{:action => 'edit' , :id => @film.id}, :class => 'action edit') %>
+
+    <div class="films show">
+      <h2><%= @film.title + "(" + @film.year.to_s + ")" %></h2>
+
+      <table summary="Film detail view">
+        <tr>
+          <th>Synopsis</th>
+          <td><%= @film.synopsis %></td>
+        </tr>
+      </table>
+
+    </div>
+    
+    <%= form_for(:film,:url => {:action => 'destroy', :id => @film.id}) do |f| %>
+
+      <div class="form-buttons">
+        <%= submit_tag("Delete Film From Database?") %>
+      </div>
+
+    <% end %>
