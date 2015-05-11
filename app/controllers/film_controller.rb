@@ -1,4 +1,7 @@
 class FilmController < ApplicationController
+
+@selected_nav = "Films"
+
   def search
     @searchTerm = params[:search]
     if @searchTerm != nil
@@ -66,4 +69,6 @@ class FilmController < ApplicationController
     # - allows listed attributes to be mass-assigned
     params.require(:film).permit(:title, :year, :synopsis)
   end
+
+
 end

@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Smdb</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+    
+    <head>
+        <title>SMDB <%= if params[:controller] != nil && params[:action] != nil && @page_heading == nil then " | " + params[:controller].titleize() + " " + params[:action].titleize() elsif @page_heading != nil then " | " + @page_heading.titleize() end%></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <%= stylesheet_link_tag('application', :media => 'all') %>
+        <%= javascript_include_tag "application" %>
+    </head>
+    
+    <body>
 
-<%= yield %>
+      <% if !flash[:notice].blank? %>
+        <div class="notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
 
-</body>
+        <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="jumbotron navbar-brand text-center well-sm" href="/"><div class="logo"><font size= "10">SMDB</font></div></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+                    <form class="navbar-form" role="search" id="searchBar">
+                        <div style="display: table; padding-left: 50px;" class="input-group">
+                            <div style="width: 1%;" class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span id="search_concept"><%= if params[:controller] == "film" then "Films" elsif params[:controller] == "filmmaker" then "Filmmakers" else "Category" end%></span> <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                  <li><a href="/film/search">Films </a></li>
+                                  <li class="divider"></li>
+                                  <li><a href="/filmmaker/search">Filmmakers</a></li>
+                                </ul>
+                            </div>
+
+                            <input type="text" class="form-control" placeholder="Search" name="search">
+
+                            <div style="width: 1%;" class="input-group-btn">
+                                <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-search"> </i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    <%=yield%>
+
+    </body>
+
 </html>
