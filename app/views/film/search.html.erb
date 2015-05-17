@@ -1,17 +1,102 @@
-  <% @page_title = params[:search] %>
-  <div class="container">
+<% @page_title = params[:search] %>
+<% per_page = 5%>
+<div class="container">
   <div class="films search">
-        <h2><%= if params[:search] != nil && params[:search] != "" then "Searching for \"" + params[:search] + "\"" else "The Latest and Greatest Student Films" end%></h2>
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">
+            <% if params[:search] != nil && params[:search] != "" then %>
+              <%= "Searching for \"" + params[:search] + "\"" %>
+              <small><%= " | " + @films.count.to_s + " results" %></small>
+            <%else%>
+              The Latest and Greatest Student Films
+            <%end%>
+          </h1>
 
-        <%= link_to(image_tag('plus_sign.png', :size=>'11x11', :alt => '+') + " Add New Film", {:action => 'add'}, :class => 'action add') %>
+        </div>
+    </div>
 
-        <table class="listing" summary="film list">
-          <% @films.each do |film| %>
-          <tr>
-            <td><%= link_to(film.title + "(" + film.year.to_s + ")", {:action => 'view' , :id => film.id},  :class => 'action view') %></td>
-          </tr>
+    <div class="content">
+      <table class="listing" summary="film list">
+        <% if params[:page] == nil then params[:page] = 0 end%>
+        <% if params[:page].to_i >= @films.size then params[:page] = @films.size - 1 end%>
+        <% if @films.size > 0 then%>
+          <% @films[(params[:page].to_i*per_page)..(params[:page]*per_page).to_i + per_page - 1].each do |film| %>
+            <!-- Search Results -->
+            <div class="row">
+                <div class="col-md-7">
+                    <%= link_to({:action => 'view' , :id => film.id}, {:class => 'img-responsive'}) do%>
+                        <img class="img-responsive" src="http://placehold.it/700x300/000/000" alt="http://placehold.it/700x300/000/000">
+                    <% end %>
+                </div>
+                <div class="col-md-5">
+                    <h2><%= link_to(film.title + "(" + film.year.to_s + ")", {:action => 'view' , :id => film.id},  :class => 'action view') %></h2>
+                    <p class="description"><%= film.synopsis%></p>
+                    <%= link_to({:action => 'view' , :id => film.id}, {:class => 'img-responsive'}) do%>
+                      <div class="btn btn-primary" >View Film <span class="glyphicon glyphicon-chevron-right"></span></div>
+                    <% end %>
+                </div>
+            </div>
+
+            <hr>
           <% end %>
-        </table>
-      </div>
+        <% end %>
+      </table>
+    </div>
 
+    <%= link_to({:action => 'add'}, :class => 'action add pull-right') do%>
+      <div class="btn btn-success" >Submit a Film <span class="glyphicon glyphicon-upload"></span></div>
+    <% end %>
+
+    <!-- Pagination -->
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <ul class="pagination">
+              <% if params[:page].to_i > 0 then %>
+                <li>
+                    <%= link_to({:page => params[:page].to_i - 1}, :class => 'action page') do %>&laquo;<% end %>
+                </li>
+              <% end %>
+              <% pages = (@films.size / per_page.to_f).ceil%>
+              <% pages.times do |i|%>
+                <% if i == params[:page].to_i then%>
+                  <li class="active">
+                <% else %>
+                  <li>
+                <% end %>
+                <%= link_to((i + 1).to_s, {:page => i}, :class => 'action page') %>
+              </li>
+              <%end%>
+              <% if params[:page].to_i < pages - 1 then %>
+                <li>
+                    <%= link_to({:page => params[:page].to_i + 1}, :class => 'action page') do %>&raquo;<% end %>
+                </li>
+              <% end %>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+            <div class="control-group" id="fields">
+                <label class="control-label" for="field1">Nice Multiple Form Fields</label>
+                <div class="controls"> 
+                    <form role="form" autocomplete="off">
+                        <div class="entry input-group col-xs-3">
+                            <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
+                          <span class="input-group-btn">
+                                <button class="btn btn-success btn-add" type="button">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                <br>
+                <small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another form field :)</small>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
 </div>
