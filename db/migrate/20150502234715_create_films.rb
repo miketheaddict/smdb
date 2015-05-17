@@ -3,7 +3,7 @@ class CreateFilms < ActiveRecord::Migration
     create_table :films do |t|
       t.string :title
       t.integer :year
-      t.string :synopsis
+      t.text :synopsis
 
       t.timestamps null: false
     end
