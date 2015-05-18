@@ -1,0 +1,71 @@
+<table summary="Film form fields">
+
+<%= error_messages_for(@film) %>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="well well-sm">
+            <form class="form-horizontal" method="post">
+                <fieldset>
+                  <legend class="text-center header jumbotron"> <h1><%= @film.title + "(" + @film.year.to_s + ")"%></h1></legend>
+
+
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Video Link</label>
+                      <div class="col-md-8 half-spacer">
+                        <div class="well well-sm"><%= if @film.url == nil || @film.url.length == 0 then "Video URL Missing!" else @film.url end%></div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Synopsis</label>
+                      <div class="col-md-8 half-spacer">
+                        <div class="well well-sm "><p><%= if @film.synopsis == nil || @film.synopsis.length == 0 then "Synopsis Missing!" else @film.synopsis end%></p></div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                      <div class="well text-center">
+                        <h3><b>Credits</b></h3>
+                        <hr>
+                        <% if @film.roles != nil && @film.roles.size > 0 then%>
+                          <%= @film.roles.each do |role|%>
+                            <%= link_to({:controller=>"filmmaker", :action=>"view", :id=>"try it"}, :class=>"action filmmaker") do%>
+                              <div class="row">
+                                <div class="col-md-6 credit text-right"><b>
+                                  <%=role.credit%>
+                                </b></div>
+                                <div class="col-md-6 credit text-left">
+                                  <%=role.filmmaker.first_name + role.filmmaker.last_name%>
+                                </div>
+                              </div>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                      <div class="well text-center">
+                        <h3><b>Trivia</b></h3>
+                        <hr>
+                        <% if @film.trivia != nil && @film.trivia.size > 0 then%>
+                          <%= @film.trivia.each do |trivia|%>
+                            <p>
+                              <%=trivia.body%>
+                            </p>
+                            <hr>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                </fieldset>
+            </form>
+
+    </div>
+</div>

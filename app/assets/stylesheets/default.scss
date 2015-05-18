@@ -22,3 +22,14 @@ body {
 .spacer {
     margin-top: 15px;
 }
+
+.half-spacer {
+    margin-top: 5px;
+}
+
+.credit{
+  max-width:100%;
+  word-wrap: break-word;
+  overflow: auto;
+  text-overflow: ellipsis;
+}

@@ -13,7 +13,9 @@ class CreateExtras < ActiveRecord::Migration
       t.string :include_type
     end
     create_table :extras do |t|
-
+      t.belongs_to :trivium, index: true
+      t.integer :include_id
+      t.string :include_type
     end
   end
   def down
