@@ -26,6 +26,12 @@ class FilmController < ApplicationController
 
   def edit
     @film = Film.find(params[:id])
+    @testFilmmaker = Filmmaker.new({:firstName=>"foist", :lastName=>"last"})
+    @testRole = Role.new({:credit=>"DINGUS HANDLER"})
+    @testRole.filmmaker = @testFilmmaker
+    @film.roles << @testRole
+    @film.save
+    redirect_to(:action => 'view', :id => @film.id)
   end
 
   #C(R)UD
@@ -104,5 +110,14 @@ class FilmController < ApplicationController
     params.require(:film).permit(:title, :year, :synopsis)
   end
 
+
+#DELETE THIS
+  def detour
+    @testFilmmaker = Filmmaker.new({:firstName=>"foist", :lastName=>"last"})
+    @testRole = Role.new({:credit=>"DINGUS HANDLER"})
+    @film.role = @testRole
+    @film.save
+    redirect_to(:action => 'view', :id => @film.id)
+  end
 
 end

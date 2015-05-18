@@ -1,16 +1,18 @@
-    <%= link_to("<< Back to Search", {:action => 'search'}, :class => 'back-link') %>
-    <%= link_to("Edit",{:action => 'edit' , :id => @film.id}, :class => 'action edit') %>
-
-    <div class="films show">
-      <h2><%= @film.title + "(" + @film.year.to_s + ")" %></h2>
-
-      <table summary="Film detail view">
-        <tr>
-          <th>Synopsis</th>
-          <td><%= @film.synopsis %></td>
-        </tr>
-      </table>
-
-      <%= render(:partial => "details") %>
-
-    </div> 
+<div class="film view">
+  <div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+      <%= link_to({:action => 'search'}, :class => 'back-link')do%>
+        <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Go Back</button>
+      <% end %>
+    </div>
+    <div class="btn-group" role="group">
+      <span class="text-center"><h1> DETAILS </h1></span>
+    </div>
+    <div class="btn-group" role="group">
+      <%= link_to({:action => 'edit', :id => @film.id}, :class => 'action edit')do%>
+        <button type="button" class="btn btn-success">Edit Film <span class="glyphicon glyphicon-pencil"></span></button>
+      <% end %>
+    </div>
+  </div>
+  <%= render(:partial => "details") %>
+</div> 

@@ -31,13 +31,13 @@
                         <hr>
                         <% if @film.roles != nil && @film.roles.size > 0 then%>
                           <%= @film.roles.each do |role|%>
-                            <%= link_to({:controller=>"filmmaker", :action=>"view", :id=>"try it"}, :class=>"action filmmaker") do%>
+                            <%= link_to({:controller=>"filmmaker", :action=>"view", :id=>role.filmmaker.id.to_s}, :class=>"action filmmaker") do%>
                               <div class="row">
                                 <div class="col-md-6 credit text-right"><b>
                                   <%=role.credit%>
                                 </b></div>
                                 <div class="col-md-6 credit text-left">
-                                  <%=role.filmmaker.first_name + role.filmmaker.last_name%>
+                                  <%=role.filmmaker.firstName + " " + role.filmmaker.lastName%>
                                 </div>
                               </div>
                             <% end %>
