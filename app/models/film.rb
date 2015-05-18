@@ -8,4 +8,8 @@ class Film < ActiveRecord::Base
 	has_many :extras, as: :include
 	has_many :trivia, :through => :extras
 	has_many :media, :through => :extras
+
+	accepts_nested_attributes_for :trivia, :allow_destroy => true
+	accepts_nested_attributes_for :media, :allow_destroy => false
+	accepts_nested_attributes_for :roles, :allow_destroy => false
 end

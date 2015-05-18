@@ -5,6 +5,8 @@ class CreateFilms < ActiveRecord::Migration
       t.integer :year
       t.text :synopsis
 
+      t.string :url
+
       t.timestamps null: false
     end
   end

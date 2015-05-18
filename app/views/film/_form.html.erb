@@ -1,17 +1,116 @@
 <table summary="Film form fields">
 
-  <%= error_messages_for(@film) %>
+<%= error_messages_for(@film) %>
 
-  <tr>
-    <th><%= f.label(:title, "Title") %></th>
-    <td><%= f.text_field(:title) %></td>
-  </tr>
-  <tr>
-    <th><%= f.label(:year) %></th>
-    <td><%= f.number_field(:year, step: 1) %></td>
-  </tr>
-  <tr>
-    <th><%= f.label(:synopsis) %></th>
-    <td><%= f.text_area(:synopsis, :size => "50x30") %></td>
-  </tr>
-</table>
+<div class="row">
+    <div class="col-md-12">
+        <div class="well well-sm">
+            <form class="form-horizontal" method="post">
+                <fieldset>
+                  <legend class="text-center header jumbotron"> <h1><%= @film.title + "(" + @film.year.to_s + ")"%></h1></legend>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center" for="title">Title</label>
+                      <div class="col-md-8">
+                        <div class="input-group">
+                            <%= f.text_field(:title, :class=>"form-control") %>
+                            <span class="input-group-addon">-</span>
+                            <%= f.number_field(:year, step: 1,:class=>"form-control", placeholder: "Year") %>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Video Link</label>
+                      <div class="col-md-8 spacer">
+                            <%= f.text_field(:url, :class=>"form-control", placeholder:"www.zombo.com") %>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Synopsis</label>
+                      <div class="col-md-8 spacer">
+                          <%= f.text_area(:synopsis, rows:"7", placeholder: "What is this movie about?", :class=>"form-control") %>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                    <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Extra Details</label>
+                    <div class="col-md-8 spacer">
+                      <div class="btn-group btn-group-justified">
+                        <%= link_to({:controller => "trivia", :action => 'add'}, {:class => 'action add'}) do%>
+                          <div class="btn btn-success">Trivia</div>
+                        <% end %>
+                        <%= link_to({:controller => "trivia", :action => 'add'}, {:class => 'action add'}) do%>
+                          <div class="btn btn-success">Credits</div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+<!-- 
+<form>
+                  <div class="control-group col-md-8" id="fields">
+                      <label class="control-label" for="field1">Trivia</label>
+                      <div class="controls"> 
+                              <div class="entry input-group trivium">
+                                <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-add" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                              </div>
+                      </div>
+                  </div>
+                </form>-->
+
+                  <!-- <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="trivia">Trivia</label>
+                      <div class="controlds">
+                        <% f.fields_for :trivia do |triv| %>
+                          <div class="col-md-8 spacer entry input-group">
+                              <%= triv.text_area(:body, :class=>"form-control") %>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                          </div>
+                        <% end -%>
+                    </div>
+                    <div class="col-md-8 text-center">
+                      <button class="btn btn-success btn-block spacer btn-add" type="button">
+                          <span class="glyphicon glyphicon-chevron-down"></span>
+                      </button>
+                    </div>
+                  </div> -->
+
+                  <div class="form-group">
+                      <div class="col-md-12 text-center spacer">
+                          <button type="submit" class="btn btn-primary btn-lg btn-submit">Submit</button>
+                      </div>
+                  </div>
+
+                </fieldset>
+            </form>
+
+
+                
+       <!--  <div class="control-group" id="fields">
+            <div class="controls"> 
+                <form role="form" autocomplete="off">
+                    <div class="entry input-group col-xs-3">
+                        <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
+                      <span class="input-group-btn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div> -->
+
+    </div>
+</div>

@@ -12,9 +12,13 @@ class CreateExtras < ActiveRecord::Migration
       t.integer :include_id
       t.string :include_type
     end
+    create_table :extras do |t|
+
+    end
   end
   def down
   	drop_table :extra_trivium
   	drop_table :extra_medium
+    drop_table :extras
   end
 end

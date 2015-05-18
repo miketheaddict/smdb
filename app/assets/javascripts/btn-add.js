@@ -15,9 +15,9 @@ $(function()
             .html('<span class="glyphicon glyphicon-minus"></span>');
     }).on('click', '.btn-remove', function(e)
     {
-		$(this).parents('.entry:first').remove();
+        $(this).parents('.entry:first').remove();
 
-		e.preventDefault();
-		return false;
-	});
+        e.preventDefault();
+        return false;
+    });
 });

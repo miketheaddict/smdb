@@ -8,6 +8,8 @@ class CreateFilmmakers < ActiveRecord::Migration
       t.string :school
       t.integer :year
 
+      t.string :url
+
       t.timestamps null: false
     end
   end

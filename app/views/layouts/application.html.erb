@@ -36,9 +36,17 @@
                                     <span id="search_concept"><%= if params[:controller] == "film" then "Films" elsif params[:controller] == "filmmaker" then "Filmmakers" else "Category" end%></span> <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                  <li><a href="/film/search">Films </a></li>
-                                  <li class="divider"></li>
-                                  <li><a href="/filmmaker/search">Filmmakers</a></li>
+                                    <li>
+                                        <a href="#">
+                                            <%= if params[:controller] != 'film' then link_to("Films", {:controller => 'film', :action => 'search'}, :class => "action film") else "Films" end%>
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <%=if params[:controller] != 'filmmaker' then link_to("Filmmakers", {:controller=>'filmmaker', :action=>'search'}, :class=>"action filmmaker") else "Filmmakers" end%>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
 

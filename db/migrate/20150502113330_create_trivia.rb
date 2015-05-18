@@ -2,7 +2,7 @@ class CreateTrivia < ActiveRecord::Migration
   def up
     create_table :trivia do |t|
     	t.boolean :spoiler
-        t.string :body
+        t.text :body
         t.timestamps null: false
     end
   end
