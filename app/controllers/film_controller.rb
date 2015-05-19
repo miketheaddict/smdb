@@ -26,12 +26,12 @@ class FilmController < ApplicationController
 
   def edit
     @film = Film.find(params[:id])
-    @testFilmmaker = Filmmaker.new({:firstName=>"foist", :lastName=>"last"})
-    @testRole = Role.new({:credit=>"DINGUS HANDLER"})
-    @testRole.filmmaker = @testFilmmaker
-    @film.roles << @testRole
-    @film.save
-    redirect_to(:action => 'view', :id => @film.id)
+    #@testFilmmaker = Filmmaker.new({:firstName=>"foist", :lastName=>"last"})
+    #@testRole = Role.new({:credit=>"DINGUS HANDLER"})
+    #@testRole.filmmaker = @testFilmmaker
+    #@film.roles << @testRole
+    #@film.save
+    #redirect_to(:action => 'view', :id => @film.id)
   end
 
   #C(R)UD
@@ -107,7 +107,7 @@ class FilmController < ApplicationController
     # same as using "params[:subject]", except that it:
     # - raises an error if :subject is not present
     # - allows listed attributes to be mass-assigned
-    params.require(:film).permit(:title, :year, :synopsis)
+    params.require(:film).permit(:title, :year, :synopsis, :url)
   end
 
 

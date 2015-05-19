@@ -12,4 +12,8 @@ class Film < ActiveRecord::Base
 	accepts_nested_attributes_for :trivia, :allow_destroy => true
 	accepts_nested_attributes_for :media, :allow_destroy => false
 	accepts_nested_attributes_for :roles, :allow_destroy => false
+
+  validates :title, presence: true
+  validates :year, presence: true
+  validates :url, presence: true
 end

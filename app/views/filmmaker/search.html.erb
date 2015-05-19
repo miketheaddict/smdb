@@ -1,22 +1,3 @@
-<!--<% @page_title = "Filmmakers" %>
-<div class="filmmakers search">
-      <h2>Filmmakers</h2>
-
-      <%= link_to(image_tag('plus_sign.png', :size=>'11x11', :alt => '+') + " Add New Filmmaker", {:action => 'add'}, :class => 'action add') %>
-
-      <table class="listing" summary="filmmaker list">
-        <tr class="header">
-          <th>Filmmaker</th>
-        </tr>
-        <% @filmmakers.each do |filmmaker| %>
-        <tr>
-          <td><%= link_to(filmmaker.firstName + " " + filmmaker.lastName, {:action => 'view' , :id => filmmaker.id},  :class => 'action view') %></td>
-        </tr>
-        <% end %>
-      </table>
-    </div> -->
-
-
 <% @page_title = params[:search] %>
 <% per_page = 5%>
 <div class="container">
@@ -44,11 +25,11 @@
           <% @filmmakers[(params[:page].to_i*per_page)..(params[:page]*per_page).to_i + per_page - 1].each do |filmmaker| %>
             <!-- Search Results -->
             <div class="row">
-                <div class="col-md-7">
+                <!-- <div class="col-md-7">
                     <%= link_to({:action => 'view' , :id => filmmaker.id}, {:class => 'img-responsive'}) do%>
                         <img class="img-responsive" src="http://placehold.it/700x300/000/000" alt="http://placehold.it/700x300/000/000">
                     <% end %>
-                </div>
+                </div> -->
                 <div class="col-md-5">
                     <h2><%= link_to(filmmaker.firstName + " " + filmmaker.lastName, {:action => 'view' , :id => filmmaker.id},  :class => 'action view') %></h2>
                     <% if filmmaker.school != nil && filmmaker.year != nil%>

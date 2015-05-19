@@ -7,4 +7,8 @@ class Filmmaker < ActiveRecord::Base
 	has_many :extras, as: :include
 	has_many :trivia, :through => :extras
 	has_many :media, :through => :extras
+
+	validates :firstName, presence: true
+	validates :lastName, presence: true
+	validates :birthDate, presence: true
 end
