@@ -1,15 +1,22 @@
-<%= link_to("<< Back to View", {:action => 'view', :id => @filmmaker.id}, :class => 'back-link') %>
-<%= link_to("Remove", {:action => 'remove', :id => @filmmaker.id}, :class => 'action remove') %>
-    <div class="filmmakers edit">
-      <h2>Edit <%= @filmmaker.firstName + " " + @filmmaker.lastName %></h2>
-
-      <%= form_for(:filmmaker, :url => {:action => 'update', :id => @filmmaker.id}) do |f| %>
-
-        <%= render(:partial => "form", :locals => {:f => f}) %>
-
-        <div class="form-buttons">
-          <%= submit_tag("Update Filmmaker") %>
+    <div class="films edit">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <%= link_to({:action => 'view', :id => @filmmaker.id}, :class => 'back-link')do%>
+            <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Go Back</button>
+          <% end %>
         </div>
+        <div class="btn-group" role="group">
+          <span class="text-center"><h1>EDIT</h1></span>
+        </div>
+        <div class="btn-group" role="group">
+          <%= link_to({:action => 'remove', :id => @filmmaker.id}, :class => 'action remove')do%>
+            <button type="button" class="btn btn-danger">Delete Filmmaker <span class="glyphicon glyphicon-remove"></span></button>
+          <% end %>
+        </div>
+      </div>
 
+      <%= simple_form_for(:filmmaker, :url => {:action => 'update', :id => @filmmaker.id}) do |f| %>
+        <%= render(:partial => "form", :locals => {:f => f}) %>
       <% end %>
-    </div> 
+
+    </div>

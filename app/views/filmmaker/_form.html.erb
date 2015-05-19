@@ -1,4 +1,4 @@
-<table summary="Filmmaker form fields">
+<!-- <table summary="Filmmaker form fields">
 
   <%= error_messages_for(@filmmaker) %>
 
@@ -27,3 +27,75 @@
     <td><%= f.text_area(:bio, :size => "50x30") %></td>
   </tr>
 </table>
+
+<table summary="Film form fields"> -->
+
+<%= error_messages_for(@film) %>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="well well-sm">
+            <form class="form-horizontal" method="post">
+                <fieldset>
+                  <legend class="text-center header jumbotron"> <h1><%= @filmmaker.firstName + " " + @filmmaker.lastName%></h1></legend>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center" for="title">Name</label>
+                      <div class="col-md-8">
+                        <div class="input-group">
+                            <%= f.text_field(:firstName, :class=>"form-control") %>
+                            <span class="input-group-addon">-</span>
+                            <%= f.text_field(:lastName, :class=>"form-control", placeholder: "Last Name") %>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Birthdate</label>
+                      <div class="col-md-8 spacer">
+                            <%= f.date_select(:birthDate, :class=>"form-control") %>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">School</label>
+                      <div class="col-md-8 spacer">
+                        <div class="input-group">
+                            <%= f.text_field(:school, :class=>"form-control") %>
+                            <span class="input-group-addon">-</span>
+                            <%= f.number_field(:year, step: 1, value: Time.now.year, :class=>"form-control") %>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Bio</label>
+                      <div class="col-md-8 spacer">
+                          <%= f.text_area(:bio, rows:"7", placeholder: "Tell me something interesting about this person?", :class=>"form-control") %>
+                      </div>
+                  </div>
+
+                  <!-- <div class="row">
+                    <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Extra Details</label>
+                    <div class="col-md-8 spacer">
+                      <div class="btn-group btn-group-justified">
+                        <%= link_to({:controller => "trivia", :action => 'add'}, {:class => 'action add'}) do%>
+                          <div class="btn btn-success">Trivia</div>
+                        <% end %>
+                        <%= link_to({:controller => "trivia", :action => 'add'}, {:class => 'action add'}) do%>
+                          <div class="btn btn-success">Credits</div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <div class="form-group">
+                      <div class="col-md-12 text-center spacer">
+                          <button type="submit" class="btn btn-primary btn-lg btn-submit">Submit</button>
+                      </div>
+                  </div>
+
+                </fieldset>
+            </form>
+    </div>
+</div>

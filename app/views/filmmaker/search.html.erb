@@ -1,4 +1,4 @@
-<% @page_title = "Filmmakers" %>
+<!--<% @page_title = "Filmmakers" %>
 <div class="filmmakers search">
       <h2>Filmmakers</h2>
 
@@ -14,4 +14,91 @@
         </tr>
         <% end %>
       </table>
-    </div> 
+    </div> -->
+
+
+<% @page_title = params[:search] %>
+<% per_page = 5%>
+<div class="container">
+  <div class="filmmakers search">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">
+            <% if params[:search] != nil && params[:search] != "" then %>
+              <%= "Searching for \"" + params[:search] + "\"" %>
+              <small><%= " | " + @filmmakers.count.to_s + " results" %></small>
+            <%else%>
+              The Latest and Greatest Student Filmmakers
+            <%end%>
+          </h1>
+
+        </div>
+    </div>
+
+    <div class="content">
+      <table class="listing" summary="filmmaker list">
+        <% if params[:page] == nil then params[:page] = 0 end%>
+        <% if params[:page].to_i >= @filmmakers.size then params[:page] = @filmmakers.size - 1 end%>
+        <% if @filmmakers.size > 0 then%>
+          <% @filmmakers[(params[:page].to_i*per_page)..(params[:page]*per_page).to_i + per_page - 1].each do |filmmaker| %>
+            <!-- Search Results -->
+            <div class="row">
+                <div class="col-md-7">
+                    <%= link_to({:action => 'view' , :id => filmmaker.id}, {:class => 'img-responsive'}) do%>
+                        <img class="img-responsive" src="http://placehold.it/700x300/000/000" alt="http://placehold.it/700x300/000/000">
+                    <% end %>
+                </div>
+                <div class="col-md-5">
+                    <h2><%= link_to(filmmaker.firstName + " " + filmmaker.lastName, {:action => 'view' , :id => filmmaker.id},  :class => 'action view') %></h2>
+                    <% if filmmaker.school != nil && filmmaker.year != nil%>
+                    <p class="description"><%= filmmaker.school + "(" + filmmaker.year.to_s + ")"%></p>
+                    <% end %>
+                    <p class="description"><%= filmmaker.bio%></p>
+                    <%= link_to({:action => 'view' , :id => filmmaker.id}, {:class => 'img-responsive'}) do%>
+                      <div class="btn btn-primary" >View Filmmaker <span class="glyphicon glyphicon-chevron-right"></span></div>
+                    <% end %>
+                </div>
+            </div>
+
+            <hr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+    <div class="row">
+      <%= link_to({:action => 'add'}, {:class => 'action add'}) do%>
+        <div class="btn btn-success btn-block pull-right">Submit a Filmmaker <span class="glyphicon glyphicon-upload"></span></div>
+      <% end %>
+    </div>  
+
+
+    <!-- Pagination -->
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <ul class="pagination">
+              <% if params[:page].to_i > 0 then %>
+                <li>
+                    <%= link_to({:page => params[:page].to_i - 1}, :class => 'action page') do %>&laquo;<% end %>
+                </li>
+              <% end %>
+              <% pages = (@filmmakers.size / per_page.to_f).ceil%>
+              <% pages.times do |i|%>
+                <% if i == params[:page].to_i then%>
+                  <li class="active">
+                <% else %>
+                  <li>
+                <% end %>
+                <%= link_to((i + 1).to_s, {:page => i}, :class => 'action page') %>
+              </li>
+              <%end%>
+              <% if params[:page].to_i < pages - 1 then %>
+                <li>
+                    <%= link_to({:page => params[:page].to_i + 1}, :class => 'action page') do %>&raquo;<% end %>
+                </li>
+              <% end %>
+            </ul>
+        </div>
+    </div>
+  </div>
+</div>

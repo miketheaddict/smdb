@@ -1,14 +1,19 @@
-<%= link_to("<< Back to Search", {:action => 'search'}, :class => 'back-link') %>
-
 <div class="filmmaker new">
-  <h2>Add Filmmaker</h2>
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+      <div class="btn-group" role="group">
+        <%= link_to({:action => 'view', :id => @filmmaker.id}, :class => 'back-link')do%>
+          <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Go Back</button>
+        <% end %>
+      </div>
+      <div class="btn-group" role="group">
+        <span class="text-center"><h1>ADD</h1></span>
+      </div>
+      <div class="btn-group" role="group">
+      </div>
+    </div>
 
   <%= form_for(:filmmaker, :url => {:action => 'create'}) do |f| %>
-    <%= render(:partial => "form", :locals => {:f => f}) %>
-
-    <div class="form-buttons">
-      <%= submit_tag("Add Filmmaker") %>
-    </div>
+  <%= render(:partial => "form", :locals => {:f => f}) %>
 
   <% end %>
 </div> 

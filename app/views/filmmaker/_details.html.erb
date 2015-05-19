@@ -1,0 +1,39 @@
+<table summary="Filmmaker form fields">
+
+<%= error_messages_for(@filmmaker) %>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="well well-sm">
+            <form class="form-horizontal" method="post">
+                <fieldset>
+                  <legend class="text-center header jumbotron"> <h1><%= @filmmaker.firstName + " " + @filmmaker.lastName%></h1></legend>
+
+
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Birthday</label>
+                      <div class="col-md-8 half-spacer">
+                        <div class="well well-sm"><%= if @filmmaker.birthDate == nil then "They were never born!" else @filmmaker.birthDate end%></div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">School</label>
+                      <div class="col-md-8 half-spacer">
+                        <div class="well well-sm"><%= if @filmmaker.school == nil || @filmmaker.school.length == 0 then "A Freelancer!" else @filmmaker.school + "(" + @filmmaker.year.to_s + ")" end%></div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Bio</label>
+                      <div class="col-md-8 half-spacer">
+                        <div class="well well-sm "><p><%= if @filmmaker.bio == nil || @filmmaker.bio.length == 0 then "Bio Missing!" else @filmmaker.bio end%></p></div>
+                      </div>
+                  </div>
+
+                </fieldset>
+            </form>
+
+    </div>
+</div>
