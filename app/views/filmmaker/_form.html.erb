@@ -1,35 +1,3 @@
-<!-- <table summary="Filmmaker form fields">
-
-  <%= error_messages_for(@filmmaker) %>
-
-  <tr>
-    <th><%= f.label(:firstName, "First Name") %></th>
-    <td><%= f.text_field(:firstName) %></td>
-  </tr>
-  <tr>
-    <th><%= f.label(:lastName, "Last Name") %></th>
-    <td><%= f.text_field(:lastName) %></td>
-  </tr>
-  <tr>
-    <th><%= f.label(:birthDate, "Birthdate") %></th>
-    <td><%= f.date_select(:birthDate) %></td>
-  </tr>
-  <tr>
-    <th><%= f.label(:school, "School") %></th>
-    <td><%= f.text_field(:school) %></td>
-  </tr>
-  <tr>
-    <th><%= f.label(:year) %></th>
-    <td><%= f.number_field(:year, step: 1) %></td>
-  </tr>
-  <tr>
-    <th><%= f.label(:bio) %></th>
-    <td><%= f.text_area(:bio, :size => "50x30") %></td>
-  </tr>
-</table>
-
-<table summary="Film form fields"> -->
-
 <%= error_messages_for(@film) %>
 
 <div class="row">
@@ -37,15 +5,15 @@
         <div class="well well-sm">
             <form class="form-horizontal" method="post">
                 <fieldset>
-                  <legend class="text-center header jumbotron"> <h1><%= @filmmaker.firstName + " " + @filmmaker.lastName%></h1></legend>
+                  <legend class="text-center header jumbotron"> <h1 class="update"><%= @filmmaker.firstName + " " + @filmmaker.lastName%></h1></legend>
 
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center" for="title">Name</label>
                       <div class="col-md-8">
                         <div class="input-group">
-                            <%= f.text_field(:firstName, :class=>"form-control") %>
+                            <%= f.text_field(:firstName, :class=>"form-control", :id=>"first", onblur: "updateFilmJumbotron(\"update\", \"{0} {1}\", [\"first\",\"last\"])") %>
                             <span class="input-group-addon">-</span>
-                            <%= f.text_field(:lastName, :class=>"form-control", placeholder: "Last Name") %>
+                            <%= f.text_field(:lastName, :class=>"form-control", placeholder: "Last Name", :id=>"last", onblur: "updateFilmJumbotron(\"update\", \"{0} {1}\", [\"first\",\"last\"])") %>
                         </div>
                       </div>
                   </div>

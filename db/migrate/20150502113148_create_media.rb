@@ -6,9 +6,12 @@ class CreateMedia < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-  end
 
-  def down
-  	drop_table :media
+    create_table :films_media do |t|
+      t.integer "film_id"
+      t.integer "medium_id"
+    end
+
+    add_index :films_media, ["film_id", "medium_id"]
   end
 end

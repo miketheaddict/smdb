@@ -13,8 +13,4 @@ class CreateFilmmakers < ActiveRecord::Migration
       t.timestamps null: false
     end
   end
-
-  def down
-  	drop_table :filmmakers
-  end
 end

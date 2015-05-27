@@ -7,15 +7,15 @@
         <div class="well well-sm">
             <form class="form-horizontal" method="post">
                 <fieldset>
-                  <legend class="text-center header jumbotron"> <h1><%= @film.title + "(" + @film.year.to_s + ")"%></h1></legend>
+                  <legend class="text-center header jumbotron" id="jumbotron"> <h1 class="update"><%= @film.title + "(" + @film.year.to_s + ")"%></h1></legend>
 
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center" for="title">Title</label>
                       <div class="col-md-8">
                         <div class="input-group">
-                            <%= f.text_field(:title, :class=>"form-control") %>
+                            <%= f.text_field(:title, :class=>"form-control", :id=>"title", onblur: "updateFilmJumbotron(\"update\", \"{0}({1})\", [\"title\",\"year\"])")%>
                             <span class="input-group-addon">-</span>
-                            <%= f.number_field(:year, step: 1,:class=>"form-control", placeholder: "Year") %>
+                            <%= f.number_field(:year, step: 1,:class=>"form-control", placeholder: "Year", :id=>"year", onblur: "updateFilmJumbotron(\"update\", \"{0}({1})\", [\"title\",\"year\"])") %>
                         </div>
                       </div>
                   </div>
@@ -35,55 +35,59 @@
                   </div>
 
                   <!-- <div class="row">
-                    <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Extra Details</label>
+                    <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">More</label>
                     <div class="col-md-8 spacer">
                       <div class="btn-group btn-group-justified">
                         <%= link_to({:controller => "trivia", :action => 'add'}, {:class => 'action add'}) do%>
                           <div class="btn btn-success">Trivia</div>
                         <% end %>
-                        <%= link_to({:controller => "trivia", :action => 'add'}, {:class => 'action add'}) do%>
+                        <%= link_to({:controller => "roles", :action => 'add'}, {:class => 'action add'}) do%>
                           <div class="btn btn-success">Credits</div>
                         <% end %>
                       </div>
                     </div>
                   </div> -->
-<!-- 
-<form>
-                  <div class="control-group col-md-8" id="fields">
-                      <label class="control-label" for="field1">Trivia</label>
-                      <div class="controls"> 
-                              <div class="entry input-group trivium">
-                                <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-success btn-add" type="button">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                </span>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="trivia">Trivia</label>
+                      <div class="col-md-8">
+                          <div id="container">
+                            <% f.fields_for :trivia do |triv| %>
+                              <!-- <div class="col-md-8 spacer entry input-group">
+                                  <%= triv.text_area(:body, :class=>"form-control") %>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </span>
+                              </div> -->
+                              <div class='spacer field input-group fillHeight'>
+                                  <textarea class='form-control' rows='2' name='trivia[]'></textarea>
+                                  <span class='input-group-btn fillHeight'>
+                                      <button class='btn btn-danger fillHeight btn-delte' type='button' onclick="delField(this, 'field')">
+                                          <span class='glyphicon glyphicon-minus'>
+                                          </span>
+                                      </button>
+                                  </span>
                               </div>
+                            <% end -%>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success btn-block spacer btn-add" type="button", onclick="addField('container', &quot;\
+                          <div class='spacer field input-group fillHeight'>\
+                              <textarea class='form-control' rows='2' name='trivia[]'></textarea>\
+                              <span class='input-group-btn fillHeight'>\
+                                  <button class='btn btn-danger fillHeight btn-delete' type='button' onclick='delField(this, \&quot;field\&quot;)'>\
+                                      <span class='glyphicon glyphicon-minus'>\
+                                      </span>\
+                                  </button>\
+                              </span>\
+                          </div>&quot;)">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                          </button>
+                        </div>
                       </div>
                   </div>
-                </form>-->
-
-                  <!-- <div class="form-group">
-                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="trivia">Trivia</label>
-                      <div class="controlds">
-                        <% f.fields_for :trivia do |triv| %>
-                          <div class="col-md-8 spacer entry input-group">
-                              <%= triv.text_area(:body, :class=>"form-control") %>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                </span>
-                          </div>
-                        <% end -%>
-                    </div>
-                    <div class="col-md-8 text-center">
-                      <button class="btn btn-success btn-block spacer btn-add" type="button">
-                          <span class="glyphicon glyphicon-chevron-down"></span>
-                      </button>
-                    </div>
-                  </div> -->
 
                   <div class="form-group">
                       <div class="col-md-12 text-center spacer">
@@ -95,9 +99,9 @@
             </form>
 
 
-                
+
        <!--  <div class="control-group" id="fields">
-            <div class="controls"> 
+            <div class="controls">
                 <form role="form" autocomplete="off">
                     <div class="entry input-group col-xs-3">
                         <input class="form-control" name="fields[]" type="text" placeholder="Type something" />

@@ -3,10 +3,8 @@ class Filmmaker < ActiveRecord::Base
     scope :search, lambda { |query| where(["lastName LIKE ? OR firstName LIKE ?", "%#{query}%", "%#{query}%"])}
 
 	has_many :roles
-	has_many :films, through: :roles
-	has_many :extras, as: :include
-	has_many :trivia, :through => :extras
-	has_many :media, :through => :extras
+	has_and_belongs_to_many :media
+	has_and_belongs_to_many :trivia
 
 	validates :firstName, presence: true
 	validates :lastName, presence: true

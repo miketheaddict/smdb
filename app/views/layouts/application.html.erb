@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    
+
     <head>
         <title>SMDB <%= if params[:controller] != nil && params[:action] != nil && @page_heading == nil then " | " + params[:controller].titleize() + " " + params[:action].titleize() elsif @page_heading != nil then " | " + @page_heading.titleize() end%></title>
         <meta charset="utf-8">
@@ -8,11 +8,11 @@
         <%= stylesheet_link_tag('application', :media => 'all') %>
         <%= javascript_include_tag "application" %>
     </head>
-    
+
     <body>
 
       <% if !flash[:notice].blank? %>
-        <div class="notice">
+        <div class="notice alert alert-info">
           <%= flash[:notice] %>
         </div>
       <% end %>

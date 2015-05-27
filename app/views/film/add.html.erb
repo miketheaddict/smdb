@@ -1,7 +1,7 @@
 <div class="films new">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
       <div class="btn-group" role="group">
-        <%= link_to({:action => 'view', :id => @film.id}, :class => 'back-link')do%>
+        <%= link_to({:action => 'search'}, :class => 'back-link')do%>
           <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Go Back</button>
         <% end %>
       </div>
@@ -16,4 +16,4 @@
   <%= render(:partial => "form", :locals => {:f => f}) %>
 
   <% end %>
-</div> 
+</div>

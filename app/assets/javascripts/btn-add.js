@@ -21,3 +21,14 @@ $(function()
         return false;
     });
 });
+
+function addField(container_id, contentHTML){
+    var container = document.getElementById(container_id);
+    var newField = $(contentHTML);
+    newField.find('.btn-delete');
+    newField.appendTo(container);
+}
+
+function delField(button, field_class){
+    $(button).parents('.' + field_class + ':first').remove();
+}

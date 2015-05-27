@@ -1,13 +1,15 @@
 class CreateTrivia < ActiveRecord::Migration
-  def up
+  def change
     create_table :trivia do |t|
     	t.boolean :spoiler
-        t.text :body
-        t.timestamps null: false
+      t.text :body
+      t.timestamps null: false
     end
-  end
 
-  def down
-  	drop_table :trivia
+    create_table :films_trivia, :id => false do |t|
+      t.integer "film_id"
+      t.integer "trivium_id"
+    end
+    add_index :films_trivia, ["film_id", "trivium_id"]
   end
 end

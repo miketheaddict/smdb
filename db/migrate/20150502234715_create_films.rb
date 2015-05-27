@@ -10,8 +10,4 @@ class CreateFilms < ActiveRecord::Migration
       t.timestamps null: false
     end
   end
-
-  def down
-  	drop_table :films
-  end
 end
