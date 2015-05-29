@@ -9,6 +9,9 @@ class FilmController < ApplicationController
     else
       @films = Film.sorted
     end
+
+    #prep the thumbnail api
+    VideoInfo.provider_api_keys = {youtube: 'AIzaSyCrG_E9dkX5wjXvjZqzGlWNCXm7VHfi3eY'}
   end
 
   def view
@@ -17,7 +20,8 @@ class FilmController < ApplicationController
 
   def add
     @film = Film.new({:title => "Movie Title", :year => Time.now.year})
-    @film.trivia.build
+    @trivia_code = render_to_string(:partial => "application/trivia_field", :formats => [:html], :layout => false, :locals => {:filmmaker_id => "filmmaker_id"}).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
+    @role_code = render_to_string(:partial => "film/role_field", :formats => [:html], :layout => false, :locals => {:filmmaker_id => "filmmaker_id"}).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
   end
 
   def remove
@@ -26,12 +30,8 @@ class FilmController < ApplicationController
 
   def edit
     @film = Film.find(params[:id])
-    #@testFilmmaker = Filmmaker.new({:firstName=>"foist", :lastName=>"last"})
-    #@testRole = Role.new({:credit=>"DINGUS HANDLER"})
-    #@testRole.filmmaker = @testFilmmaker
-    #@film.roles << @testRole
-    #@film.save
-    #redirect_to(:action => 'view', :id => @film.id)
+    @trivia_code = render_to_string(:partial => "application/trivia_field", :formats => [:html], :layout => false, :locals => {:filmmaker_id => "filmmaker_id"}).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
+    @role_code = render_to_string(:partial => "film/role_field", :formats => [:html], :layout => false, :locals => {:filmmaker_id => "filmmaker_id"}).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
   end
 
   #C(R)UD
@@ -39,21 +39,26 @@ class FilmController < ApplicationController
     # Instantiate a new object using form parameters
     @film = Film.new(film_params)
     # Save the object
-    if params[:add_trivium]
+    if params[:trivia] != nil then
       # add empty trivia associated with @film
-      @film.trivia.build
-    elsif params[:remove_trivium]
-      # nested model that have _destroy attribute = 1 automatically deleted by rails
-    else
-      if @film.save
-          # If save succeeds, redirect to the index action
-          flash[:notice] = "Film created successfully."
-          redirect_to(:action => 'view', :id => @film.id)
-          return
-      #else
-          # If save fails, redisplay the form so user can fix problems
-          #render('add')
+      #@film.trivia.build
+      params[:trivia].each do |triv|
+        if triv.length > 0 && triv != "" && triv != nil
+          @film.trivia << Trivium.new(:body=>triv, :spoiler=>false)
+        end
       end
+    end
+    if @film.save
+        @film.trivia.each do |triv|
+            triv.save
+        end
+     # If save succeeds, redirect to the index action
+     flash[:notice] = "Film created successfully."
+     redirect_to(:action => 'view', :id => @film.id)
+     return
+    #else
+     # If save fails, redisplay the form so user can fix problems
+     #render('add')
     end
     render('add')
   end
@@ -62,42 +67,42 @@ class FilmController < ApplicationController
     # Find an existing object using form parameters
     @film = Film.find(params[:id])
 
-    if params[:add_trivium]
-      #rebuild the trivia attributes that don't have an id
-      unless params[:film][:trivium_attributes].blank?
-        for attribute in params[:film][:trivia_attributes]
-          @film.trivia.build(attribute.last.except(:_destroy)) unless attribute.last.has_key?(:id)
+    #update the trivia
+    if params[:trivia] != nil || !@film.trivia.empty?;
+        #a less than ideal way to update them
+        @film.trivia.each do |triv|
+            triv.destroy
         end
-      end
-      # add on more empty trivium attribute
-      @film.trivia.build
-    elsif params[:remove_trivium]
-      # collect all marked for delete ingredient ids
-      removed_trivia = params[:film][:trivia_attributes].collect { |i, att| att[:id] if (att[:id] && att[:_destroy].to_i == 1) }
-      # physically delete the trivia from database
-      Trivium.delete(removed_ingredients)
-      flash[:notice] = "Trivia removed."
-      for attribute in params[:film][:trivia_attributes]
-        # rebuild ingredients attributes that doesn't have an id and its _destroy attribute is not 1
-        @film.trivia.build(attribute.last.except(:_destroy)) if (!attribute.last.has_key?(:id) && attribute.last[:_destroy].to_i == 0)
-      end
-    else
+        @film.trivia.clear
+
+        if params[:trivia] != nil
+            params[:trivia].each do |triv|
+                @film.trivia << Trivium.new(:body=>triv, :spoiler=>false);
+            end
+        end
+    end
     # Update the object
-      if @film.update_attributes(film_params)
+    if @film.update_attributes(film_params)
+        @film.trivia.each do |triv|
+            triv.save
+        end
         # If update succeeds, redirect to the index action
         flash[:notice] = "Film updated successfully."
         redirect_to(:action => 'view', :id => @film.id)
         return
-      #else
+        #else
         # If update fails, redisplay the form so user can fix problems
-      #  render('edit')
-      end
+        #  render('edit')
     end
     render('edit')
   end
 
   def destroy
-    film = Film.find(params[:id]).destroy
+    film = Film.find(params[:id])
+    film.trivia.each do |triv|
+        triv.destroy
+    end
+    film.destroy
     flash[:notice] = "#{film.title} (#{film.year}) destroyed successfully."
     redirect_to(:action => 'search')
   end
@@ -107,17 +112,7 @@ class FilmController < ApplicationController
     # same as using "params[:subject]", except that it:
     # - raises an error if :subject is not present
     # - allows listed attributes to be mass-assigned
-    params.require(:film).permit(:title, :year, :synopsis, :url)
-  end
-
-
-#DELETE THIS
-  def detour
-    @testFilmmaker = Filmmaker.new({:firstName=>"foist", :lastName=>"last"})
-    @testRole = Role.new({:credit=>"DINGUS HANDLER"})
-    @film.role = @testRole
-    @film.save
-    redirect_to(:action => 'view', :id => @film.id)
+    params.require(:film).permit(:title, :year, :synopsis, :url, :password)
   end
 
 end

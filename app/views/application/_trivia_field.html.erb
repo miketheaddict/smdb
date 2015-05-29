@@ -1,0 +1,9 @@
+<div class="half-spacer field input-group fillHeight">
+	<textarea class="form-control" rows="2" name="trivia[]"><% if defined? triv %><%= triv.body %><% end %></textarea>
+	<span class="input-group-btn fillHeight">
+		<button class="btn btn-danger fillHeight btn-delete" type="button" style="padding-top:0px; padding-bottom:0px;" onclick="delField(this, \&quot;field\&quot;)">
+			<span class="glyphicon glyphicon-minus">
+			</span>
+		</button>
+	</span>
+</div>

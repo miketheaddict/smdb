@@ -6,6 +6,7 @@ class CreateFilms < ActiveRecord::Migration
       t.text :synopsis
 
       t.string :url
+      t.string :password
 
       t.timestamps null: false
     end

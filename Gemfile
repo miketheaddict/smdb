@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'mysql2'
 
-gem 'bootstrap-sass', '~> 3.2.0' 
+gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
 gem 'simple_form'
@@ -10,6 +10,10 @@ gem 'simple_form'
 gem 'actionform'
 
 gem 'tzinfo-data'
+
+gem 'video_info', github: 'thibaudgg/video_info'
+
+gem 'jquery-ui-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -52,4 +56,3 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-

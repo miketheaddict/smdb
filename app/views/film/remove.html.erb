@@ -1,21 +1,25 @@
-    <%= link_to("<< Back to Edit",{:action => 'edit' , :id => @film.id}, :class => 'action edit') %>
+    <div class="film remove">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <%= link_to({:action => 'view', :id => @film.id}, :class => 'back-link')do%>
+            <button type="button" class="btn btn-primary ">
+                    <span class="glyphicon glyphicon-chevron-left"></span> Go Back
+            </button>
+          <% end %>
+        </div>
 
-    <div class="films show">
-      <h2><%= @film.title + "(" + @film.year.to_s + ")" %></h2>
+        <div class="btn-group text-center" role="group">
+          <h1><span class="glyphicon glyphicon-remove"><br></span></h1>
+        </div>
 
-      <table summary="Film detail view">
-        <tr>
-          <th>Synopsis</th>
-          <td><%= @film.synopsis %></td>
-        </tr>
-      </table>
-
-    </div>
-    
-    <%= form_for(:film,:url => {:action => 'destroy', :id => @film.id}) do |f| %>
-
-      <div class="form-buttons">
-        <%= submit_tag("Delete Film From Database?") %>
+        <div class="btn-group" role="group">
+            <%= form_tag url_for({:action => 'destroy', :id => @film.id}) do  %>
+               <button class="btn btn-danger btn-block" style="word-wrap:break-word;">
+                   Permanently delete this film?
+                   <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            <% end %>
+        </div>
       </div>
-
-    <% end %>
+      <%= render(:partial => "details") %>
+    </div>

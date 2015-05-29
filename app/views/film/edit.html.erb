@@ -5,8 +5,8 @@
           <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Go Back</button>
         <% end %>
       </div>
-      <div class="btn-group" role="group">
-        <span class="text-center"><h1>EDIT</h1></span>
+      <div class="btn-group text-center" role="group">
+        <h1><span class="glyphicon glyphicon-pencil"><br></span></h1>
       </div>
       <div class="btn-group" role="group">
         <%= link_to({:action => 'remove', :id => @film.id}, :class => 'action remove')do%>
@@ -14,7 +14,6 @@
         <% end %>
       </div>
     </div>
-
     <%= simple_form_for(:film, :url => {:action => 'update', :id => @film.id}) do |f| %>
       <%= render(:partial => "form", :locals => {:f => f}) %>
     <% end %>

@@ -5,8 +5,8 @@
         <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Go Back</button>
       <% end %>
     </div>
-    <div class="btn-group" role="group">
-      <span class="text-center"><h1> DETAILS </h1></span>
+    <div class="btn-group text-center" role="group">
+      <h1><span class="glyphicon glyphicon-film"><br></span></h1>
     </div>
     <div class="btn-group" role="group">
       <%= link_to({:action => 'edit', :id => @film.id}, :class => 'action edit')do%>
@@ -15,4 +15,4 @@
     </div>
   </div>
   <%= render(:partial => "details") %>
-</div> 
+</div>

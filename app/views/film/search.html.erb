@@ -26,14 +26,37 @@
             <!-- Search Results -->
             <div class="row">
                 <div class="col-md-7">
-                    <%= link_to({:action => 'view' , :id => film.id}, {:class => 'img-responsive'}) do%>
-                      <img class="img-responsive" src="http://placehold.it/700x300/000/000" alt="http://placehold.it/700x300/000/000">
+                    <%= link_to({:action => 'view' , :id => film.id, :anchor => 'title'}, {:class => 'img-responsive'}) do%>
+                        <% begin %>
+                            <% video = VideoInfo.new(film.url) %>
+                            <% if video.available? %>
+                                <% thumbUrl = video.thumbnail_large%>
+                            <% else %>
+                                <!-- <img class="img-responsive thumbnail" src="http://placehold.it/700x300/000/000" alt="http://placehold.it/700x300/000/000"> -->
+                                <!-- We're going to go ahead and assume that it's not working because it's a youtube video and youtube -->
+                                <% if film.url.rindex('youtube') != nil %>
+                                    <% thumbUrl = 'http://img.youtube.com/vi/' + film.url[film.url.rindex('=') + 1..film.url.length]%>
+                                    <% if thumbUrl[thumbUrl.length - 1] != '/' %>
+                                        <% thumbUrl = thumbUrl + '/' %>
+                                    <% end %>
+                                    <% thumbUrl = thumbUrl + 'maxresdefault.jpg'%>
+                                <% else %>
+                                    <!-- alternate placeholder image: <% thumbUrl = 'http://fillmurray.com/533/300'%> -->
+                                    <% thumbUrl = 'http://placehold.it/1280x720/333/69c&text=VIDEO+IS+PRIVATE'%>
+                                <% end %>
+                            <% end %>
+                        <% rescue %>
+                            <%thumbUrl = 'http://placehold.it/1280x720/333/69c&text=NO+THUMNAIL+FOUND'%>
+                        <% end %>
+
+                        <!-- <img class="img-responsive thumbnail" src="<%=thumbUrl%>" alt="<%=thumbUrl%>"> -->
+                        <span class="thumbnail" style="background-image:url('<%=thumbUrl%>'); height:300px;" />
                     <% end %>
                 </div>
                 <div class="col-md-5">
-                    <h2><%= link_to(film.title + "(" + film.year.to_s + ")", {:action => 'view' , :id => film.id},  :class => 'action view') %></h2>
+                    <h2><%= link_to(film.title + "(" + film.year.to_s + ")", {:action => 'view' , :id => film.id, :anchor => 'title'},  :class => 'action view') %></h2>
                     <p class="description"><%= film.synopsis%></p>
-                    <%= link_to({:action => 'view' , :id => film.id}, {:class => 'img-responsive'}) do%>
+                    <%= link_to film.url, :target => "_blank" do%>
                       <div class="btn btn-primary" >View Film <span class="glyphicon glyphicon-chevron-right"></span></div>
                     <% end %>
                 </div>
@@ -46,9 +69,9 @@
     </div>
     <div class="row">
       <%= link_to({:action => 'add'}, {:class => 'action add'}) do%>
-        <div class="btn btn-success btn-block pull-right">Submit a Film <span class="glyphicon glyphicon-upload"></span></div>
+        <button class="btn btn-success btn-block pull-right">Submit a Film <span class="glyphicon glyphicon-upload"></span></button>
       <% end %>
-    </div>  
+    </div>
 
 
     <!-- Pagination -->

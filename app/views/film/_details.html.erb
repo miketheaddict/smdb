@@ -2,71 +2,111 @@
 
 <%= error_messages_for(@film) %>
 
+    <a id="title"></a>
 <div class="row">
     <div class="col-md-12">
+        <div class="text-center header jumbotron" style="margin-bottom: 0px;">
+            <h1><%= @film.title + "(" + @film.year.to_s + ")"%></h1>
+        </div>
+
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" onclick="smooth_scroll('#video')">Video</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" onclick="smooth_scroll('#synopsis')">Synopsis</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" onclick="smooth_scroll('#credits')">Credits</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" onclick="smooth_scroll('#trivia')">Trivia</button>
+            </div>
+        </div>
+
         <div class="well well-sm">
-            <form class="form-horizontal" method="post">
-                <fieldset>
-                  <legend class="text-center header jumbotron"> <h1><%= @film.title + "(" + @film.year.to_s + ")"%></h1></legend>
-
-
-
-                  <div class="form-group">
-                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Video Link</label>
-                      <div class="col-md-8 half-spacer">
-                        <div class="well well-sm"><%= if @film.url == nil || @film.url.length == 0 then "Video URL Missing!" else @film.url end%></div>
-                      </div>
-                  </div>
-
-                  <div class="form-group">
-                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Synopsis</label>
-                      <div class="col-md-8 half-spacer">
-                        <div class="well well-sm "><p><%= if @film.synopsis == nil || @film.synopsis.length == 0 then "Synopsis Missing!" else @film.synopsis end%></p></div>
-                      </div>
-                  </div>
-                  
-                  <!-- <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                      <div class="well text-center">
-                        <h3><b>Credits</b></h3>
-                        <hr>
-                        <% if @film.roles != nil && @film.roles.size > 0 then%>
-                          <%= @film.roles.each do |role|%>
-                            <%= link_to({:controller=>"filmmaker", :action=>"view", :id=>role.filmmaker.id.to_s}, :class=>"action filmmaker") do%>
-                              <div class="row">
-                                <div class="col-md-6 credit text-right"><b>
-                                  <%=role.credit%>
-                                </b></div>
-                                <div class="col-md-6 credit text-left">
-                                  <%=role.filmmaker.firstName + " " + role.filmmaker.lastName%>
-                                </div>
-                              </div>
+          <div class="row panel panel-default">
+            <div class="details col-md-8 col-md-offset-2">
+                <div class="panel-body">
+                    <a id="video"></a>
+                    <% begin %>
+                    <% video = VideoInfo.new(@film.url).embed_code(iframe_attributes: {class:"embed-responsive-item"})%>
+                    <% rescue %>
+                        <label class="col-md-2 text-right">Video </label>
+                        <div class="col-md-10">
+                            <%= link_to @film.url, :target => "_blank" do %>
+                                <span style="word-wrap:break-word;">
+                                    <%= if @film.url == nil || @film.url.length == 0 then "Video URL Missing!" else @film.url end%>
+                                </span>
                             <% end %>
-                          <% end %>
-                        <% end %>
-                      </div>
+                            <% if @film.password != nil && @film.password.length > 0 %>
+                                <span class="label label-default" style="margin-left: 5px; word-wrap:break-word;"><%= "Password: " + @film.password %></span>
+                            <% end %>
+                        </div>
+                    <% else %>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <%=raw video%>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+          </div>
+
+            <div class="row spacer">
+              <div class="details col-md-8 col-md-offset-2">
+                  <a id="synopsis"></a>
+                  <label class="col-md-2 text-right spacer">Synopsis</label>
+                  <div class="col-md-10 half-spacer">
+                    <div class="well well-sm " style="word-wrap: break-word;">
+                        <p>
+                            <%= if @film.synopsis == nil || @film.synopsis.length == 0 then "Synopsis Missing!" else @film.synopsis end%>
+                        </p>
                     </div>
-                  </div> -->
+                  </div>
+                </div>
+          </div>
 
-                  <!-- <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                      <div class="well text-center">
-                        <h3><b>Trivia</b></h3>
-                        <hr>
-                        <% if @film.trivia != nil && @film.trivia.size > 0 then%>
-                          <%= @film.trivia.each do |trivia|%>
-                            <p>
-                              <%=trivia.body%>
-                            </p>
-                            <hr>
-                          <% end %>
-                        <% end %>
+
+          <!-- <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <a id="credits"></a>
+              <div class="well text-center">
+                <h3><b>Credits</b></h3>
+                <hr>
+                <% if @film.roles != nil && @film.roles.size > 0 then%>
+                  <%= @film.roles.each do |role|%>
+                    <%= link_to({:controller=>"filmmaker", :action=>"view", :id=>role.filmmaker.id.to_s}, :class=>"action filmmaker") do%>
+                      <div class="row">
+                        <div class="col-md-6 credit text-right"><b>
+                          <%=role.credit%>
+                        </b></div>
+                        <div class="col-md-6 credit text-left">
+                          <%=role.filmmaker.firstName + " " + role.filmmaker.lastName%>
+                        </div>
                       </div>
-                    </div>
-                  </div> -->
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div> -->
 
-                </fieldset>
-            </form>
-
+          <% if @film.trivia != nil && @film.trivia.size > 0 then%>
+          <div class="row">
+            <div class="panel panel-default col-md-6 col-md-offset-3 text-center" style="padding-left:0px;padding-right:0px;">
+                <a id="trivia"></a>
+                <div class="panel-heading">
+                    <h3><b>Trivia</b></h3>
+                </div>
+                <div class="list-group list-hover">
+                  <% @film.trivia.each do |trivia|%>
+                    <li class="list-group-item">
+                      <%=trivia.body%>
+                    </li>
+                  <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
     </div>
 </div>

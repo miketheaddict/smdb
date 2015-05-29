@@ -17,51 +17,48 @@
         </div>
       <% end %>
 
-        <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <%= link_to({:controller => 'film', :action => 'search'}, :class => 'action home') do%>
-                    <div class="jumbotron navbar-brand text-center well-sm"><div class="logo"><font size= "10">SMDB</font></div></div>
-                    <% end %>
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+              <div class="container-fluid">
+                <div class="navbar-header" style="margin-left:25px; margin-right:15px;">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <%= link_to({:controller => 'film', :action => 'search'}, :class => 'action home uncolored-link') do%>
+                    <div class="navbar-brand text-center logo-container"><div class="logo">
+                        <font size= "10">SMDB</font>
+                        <a href="#" class="dropdown-toggle uncolored-link hover-glow" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                          <ul class="dropdown-menu" role="menu" style="right: auto; left: auto;">
+                            <li><%= link_to "Films", :controller=>"film", :action=>"search"%></li>
+                            <li class="divider"></li>
+                            <li><%= link_to "Filmmakers", :controller=>"filmmaker", :action=>"search"%></li>
+                          </ul>
+                    </div></div>
+                  <% end %>
                 </div>
-                <div class="collapse navbar-collapse" id="navbar-ex-collapse">
-                    <form class="navbar-form" role="search" id="searchBar">
-                        <div style="display: table; padding-left: 50px;" class="input-group">
-                            <div style="width: 1%;" class="input-group-btn">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <span id="search_concept"><%= if params[:controller] == "film" then "Films" elsif params[:controller] == "filmmaker" then "Filmmakers" else "Category" end%></span> <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#">
-                                            <%= if params[:controller] != 'film' then link_to("Films", {:controller => 'film', :action => 'search'}, :class => "action film") else "Films" end%>
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <%=if params[:controller] != 'filmmaker' then link_to("Filmmakers", {:controller=>'filmmaker', :action=>'search'}, :class=>"action filmmaker") else "Filmmakers" end%>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
 
-                            <input type="text" class="form-control" placeholder="Search" name="search">
+                <div class="navbar-collapse collapse" id="searchbar">
+                    <%= form_tag url_for(:controller=>'search', :action => 'search'), method: "get", class: 'form-inline' do %>
+                    <div class="form-group" style="display:inline;">
+                      <div class="input-group" style="display:table; margin-top:8px;">
+                        <span class="input-group-btn" data-toggle="dropdown" style="width: 1%;">
+                            <%= select_tag(:category, options_for_select([['Films', 'film'],['Filmmakers', 'filmmaker']], params[:controller]), :class=>"form-control btn btn-default input-group")%>
+                        </span>
+                        <input class="form-control" name="search" placeholder="Search Here" autocomplete="off" autofocus="autofocus" type="text" style="margin-top">
+                        <span class="input-group-btn" style="width:1%">
+                            <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-search"> </i></button>
+                        </span>
+                      </div>
+                    </div>
+                  <% end %>
 
-                            <div style="width: 1%;" class="input-group-btn">
-                                <button type="submit" class="btn btn-default" ><i class="glyphicon glyphicon-search"> </i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                </div><!--/.nav-collapse -->
+              </div>
+          </nav>
+
 
     <%=yield%>
 

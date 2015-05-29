@@ -10,23 +10,20 @@
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center" for="title">Name</label>
                       <div class="col-md-8">
-                        <div class="input-group">
                             <%= f.text_field(:firstName, :class=>"form-control", :id=>"first", onblur: "updateFilmJumbotron(\"update\", \"{0} {1}\", [\"first\",\"last\"])") %>
-                            <span class="input-group-addon">-</span>
-                            <%= f.text_field(:lastName, :class=>"form-control", placeholder: "Last Name", :id=>"last", onblur: "updateFilmJumbotron(\"update\", \"{0} {1}\", [\"first\",\"last\"])") %>
-                        </div>
+                            <%= f.text_field(:lastName, :class=>"form-control half-spacer", placeholder: "Last Name", :id=>"last", onblur: "updateFilmJumbotron(\"update\", \"{0} {1}\", [\"first\",\"last\"])") %>
                       </div>
                   </div>
 
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Birthdate</label>
                       <div class="col-md-8 spacer">
-                            <%= f.date_select(:birthDate, :class=>"form-control") %>
+                            <%= f.date_field(:birthDate, :class=>"form-control") %>
                       </div>
                   </div>
 
                   <div class="form-group">
-                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">School</label>
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer">School</label>
                       <div class="col-md-8 spacer">
                         <div class="input-group">
                             <%= f.text_field(:school, :class=>"form-control") %>

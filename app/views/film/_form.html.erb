@@ -4,16 +4,18 @@
 
 <div class="row">
     <div class="col-md-12">
+        <legend class="text-center header jumbotron" id="jumbotron" style="margin-bottom:0px;">
+            <h1 class="update"><%= @film.title + "(" + @film.year.to_s + ")"%></h1>
+        </legend>
         <div class="well well-sm">
             <form class="form-horizontal" method="post">
                 <fieldset>
-                  <legend class="text-center header jumbotron" id="jumbotron"> <h1 class="update"><%= @film.title + "(" + @film.year.to_s + ")"%></h1></legend>
 
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center" for="title">Title</label>
-                      <div class="col-md-8">
+                      <div class="col-md-7">
                         <div class="input-group">
-                            <%= f.text_field(:title, :class=>"form-control", :id=>"title", onblur: "updateFilmJumbotron(\"update\", \"{0}({1})\", [\"title\",\"year\"])")%>
+                            <%= f.text_field(:title, :class=>"form-control", :id=>"title", placeholder: "Name of the Movie", onblur: "updateFilmJumbotron(\"update\", \"{0}({1})\", [\"title\",\"year\"])")%>
                             <span class="input-group-addon">-</span>
                             <%= f.number_field(:year, step: 1,:class=>"form-control", placeholder: "Year", :id=>"year", onblur: "updateFilmJumbotron(\"update\", \"{0}({1})\", [\"title\",\"year\"])") %>
                         </div>
@@ -22,14 +24,16 @@
 
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Video Link</label>
-                      <div class="col-md-8 spacer">
-                            <%= f.text_field(:url, :class=>"form-control", placeholder:"www.zombo.com") %>
+                      <div class="col-md-7 spacer">
+                            <%= f.url_field(:url, :class=>"form-control", placeholder:"www.zombo.com", :required => true) %>
+                            <%= f.text_field(:password, :class=>"form-control half-spacer", placeholder:"password (optional)") %>
                       </div>
+
                   </div>
 
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Synopsis</label>
-                      <div class="col-md-8 spacer">
+                      <div class="col-md-7 spacer">
                           <%= f.text_area(:synopsis, rows:"7", placeholder: "What is this movie about?", :class=>"form-control") %>
                       </div>
                   </div>
@@ -48,41 +52,43 @@
                     </div>
                   </div> -->
 
+                  <div class="spacer"><br></div>
                   <div class="form-group">
-                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="trivia">Trivia</label>
-                      <div class="col-md-8">
-                          <div id="container">
-                            <% f.fields_for :trivia do |triv| %>
-                              <!-- <div class="col-md-8 spacer entry input-group">
-                                  <%= triv.text_area(:body, :class=>"form-control") %>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success" type="button">
-                                            <span class="glyphicon glyphicon-plus"></span>
-                                        </button>
-                                    </span>
-                              </div> -->
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="trivia">Credits</label>
+                      <div class="col-md-7 half-spacer">
+                          <div id="role-container">
+                            <% @film.roles.each do |rol| %>
                               <div class='spacer field input-group fillHeight'>
-                                  <textarea class='form-control' rows='2' name='trivia[]'></textarea>
+                                  <textarea class='form-control' rows='2' name='roles[]'><%=rol.body%></textarea>
                                   <span class='input-group-btn fillHeight'>
-                                      <button class='btn btn-danger fillHeight btn-delte' type='button' onclick="delField(this, 'field')">
+                                      <button class='btn btn-danger fillHeight btn-delete' type='button' onclick="delField(this, 'field')">
                                           <span class='glyphicon glyphicon-minus'>
                                           </span>
                                       </button>
                                   </span>
                               </div>
-                            <% end -%>
+                            <% end %>
                         </div>
                         <div class="text-center">
-                          <button class="btn btn-success btn-block spacer btn-add" type="button", onclick="addField('container', &quot;\
-                          <div class='spacer field input-group fillHeight'>\
-                              <textarea class='form-control' rows='2' name='trivia[]'></textarea>\
-                              <span class='input-group-btn fillHeight'>\
-                                  <button class='btn btn-danger fillHeight btn-delete' type='button' onclick='delField(this, \&quot;field\&quot;)'>\
-                                      <span class='glyphicon glyphicon-minus'>\
-                                      </span>\
-                                  </button>\
-                              </span>\
-                          </div>&quot;)">
+                          <button class="btn btn-success btn-block half-spacer btn-add" type="button", onclick="addField('role-container', &quot;<%= @role_code %>&quot;)">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                          </button>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div class="spacer"><br></div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="trivia">Trivia</label>
+                      <div class="col-md-7 half-spacer">
+                          <div id="trivia-container">
+                            <% @film.trivia.each do |triv| %>
+                                <%= render(:partial => "application/trivia_field", :locals => {triv: triv}) %>
+                            <% end %>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success btn-block spacer btn-add" type="button", onclick="addField('trivia-container', &quot;<%= @trivia_code %>&quot;)">
                             <span class="glyphicon glyphicon-chevron-down"></span>
                           </button>
                         </div>
@@ -97,24 +103,5 @@
 
                 </fieldset>
             </form>
-
-
-
-       <!--  <div class="control-group" id="fields">
-            <div class="controls">
-                <form role="form" autocomplete="off">
-                    <div class="entry input-group col-xs-3">
-                        <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
-                      <span class="input-group-btn">
-                            <button class="btn btn-success btn-add" type="button">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </div>
-        </div> -->
-
     </div>
 </div>

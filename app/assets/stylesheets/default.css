@@ -1,14 +1,23 @@
 .logo {
-	padding-top: 5px;
+
+}
+
+.logo-container{
+	border-radius: 8px;
+    background: #fff;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .navbar{
-	padding-top: 15px;
-	max-height: 80px;
+	/*max-height: 80px;
+	margin-bottom: 0px;*/
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 body {
-  padding-top: 80px;
+	padding-top: 70px;
 }
 
 .description{
@@ -17,6 +26,41 @@ body {
   word-wrap: break-word;
   overflow: auto;
   text-overflow: ellipsis;
+}
+
+.thumbnail{
+	max-height:300px;
+	max-width:700px;
+	margin: 0 auto;
+	background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.header{
+
+	background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+}
+
+.private-caption{
+	color:#fff;                   /* text color */
+	text-shadow: 2px 2px 8px #000;
+	font-size: 300%;                  /* font size */
+	font-weight:bold;                /* font weight */
+	font-family:Impact;               /* font family */
+	text-align: center;
+	width: 100%;
+	height: 300px;
+	position: absolute;
+	top: 37%;
+	left: 0;
+	z-index: 1;
+}
+
+.private-thumb{
+	filter: brightness(50%) grayscale(75%);
 }
 
 .spacer {
@@ -34,6 +78,49 @@ body {
   text-overflow: ellipsis;
 }
 
+.flush-button{
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.uncolored-link, .uncolored-link:hover, .uncolored-link:focus{
+	color: inherit;
+	text-decoration: inherit;
+}
+
+.hover-glow:hover{
+	text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 8px #69f, 0 0 14px #69f, 0 0 16px #69f, 0 0 20px #69f, 0 0 30px #69f;
+}
+
 .fillHeight{
 	height: 100%;
+}
+
+.fillWidth{
+	width: 100%;
+}
+
+
+
+
+
+
+::-webkit-input-placeholder {
+	font-style: italic;
+	opacity: 0.33;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+	font-style: italic;
+	opacity: 0.33;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+	font-style: italic;
+	opacity: 0.33;
+}
+
+:-ms-input-placeholder {
+	font-style: italic;
+	opacity: 0.33;
 }
