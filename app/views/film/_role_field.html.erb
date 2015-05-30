@@ -2,12 +2,16 @@
 	<div class="half-spacer field input-group fillHeight fillWidth" style="display: table;">
 		<div class="input-group">
 			<span class="input-group" style="width:100%;">
-				<%= text_field_tag('roles[credit][]', nil, :class => 'form-control fillWidth') %>
+				<% if defined? rol%>
+					<%= text_field_tag('roles[credit][]', nil, :class => 'form-control fillWidth', value: rol.credit, placeholder:"Credit") %>
+				<% else %>
+					<%= text_field_tag('roles[credit][]', nil, :class => 'form-control fillWidth', placeholder:"Credit") %>
+				<% end %>
 			</span>
 			<span class='input-group-btn' style="width:1%;">
 				<% filmmaker_array = Filmmaker.all.map { |filmmaker| [filmmaker.firstName + ' ' + filmmaker.lastName, filmmaker.id] } %>
-				<% if filmmaker_id != nil%>
-					<%= select_tag('roles[filmmaker_id][]', options_for_select(filmmaker_array, filmmaker_id), :class => 'form-control') %>
+				<% if defined? rol%>
+					<%= select_tag('roles[filmmaker_id][]', options_for_select(filmmaker_array, rol.filmmaker_id), :class => 'form-control') %>
 				<% else %>
 					<%= select_tag('roles[filmmaker_id][]', options_for_select(filmmaker_array), :class => 'form-control') %>
 				<% end %>

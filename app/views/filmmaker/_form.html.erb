@@ -1,4 +1,4 @@
-<%= error_messages_for(@film) %>
+<%= error_messages_for(@filmmaker) %>
 
 <div class="row">
     <div class="col-md-12">
@@ -40,19 +40,40 @@
                       </div>
                   </div>
 
-                  <!-- <div class="row">
-                    <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Extra Details</label>
-                    <div class="col-md-8 spacer">
-                      <div class="btn-group btn-group-justified">
-                        <%= link_to({:controller => "trivia", :action => 'add'}, {:class => 'action add'}) do%>
-                          <div class="btn btn-success">Trivia</div>
-                        <% end %>
-                        <%= link_to({:controller => "trivia", :action => 'add'}, {:class => 'action add'}) do%>
-                          <div class="btn btn-success">Credits</div>
-                        <% end %>
+                  <div class="spacer"><br></div>
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="trivia">Credits</label>
+                      <div class="col-md-7 half-spacer">
+                          <div id="role-container">
+                            <% @filmmaker.roles.each do |rol| %>
+                                <%= render(:partial => "role_field", :locals => {rol: rol}) %>
+                            <% end %>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success btn-block half-spacer btn-add" type="button", onclick="addField('role-container', &quot;<%= @role_code %>&quot;)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </div> -->
+                  </div>
+
+                  <div class="spacer"><br></div>
+
+                  <div class="form-group">
+                      <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="trivia">Trivia</label>
+                      <div class="col-md-7 half-spacer">
+                          <div id="trivia-container">
+                            <% @filmmaker.trivia.each do |triv| %>
+                                <%= render(:partial => "application/trivia_field", :locals => {triv: triv}) %>
+                            <% end %>
+                        </div>
+                        <div class="text-center">
+                          <button class="btn btn-success btn-block spacer btn-add" type="button", onclick="addField('trivia-container', &quot;<%= @trivia_code %>&quot;)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                          </button>
+                        </div>
+                      </div>
+                  </div>
 
                   <div class="form-group">
                       <div class="col-md-12 text-center spacer">

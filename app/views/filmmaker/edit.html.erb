@@ -5,16 +5,15 @@
             <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Go Back</button>
           <% end %>
         </div>
-        <div class="btn-group" role="group">
-          <span class="text-center"><h1>EDIT</h1></span>
+        <div class="btn-group text-center" role="group">
+          <h1><span class="glyphicon glyphicon-pencil"><br></span></h1>
         </div>
         <div class="btn-group" role="group">
           <%= link_to({:action => 'remove', :id => @filmmaker.id}, :class => 'action remove')do%>
-            <button type="button" class="btn btn-danger">Delete Filmmaker <span class="glyphicon glyphicon-remove"></span></button>
+            <button type="button" class="btn btn-danger">Delete Film <span class="glyphicon glyphicon-remove"></span></button>
           <% end %>
         </div>
       </div>
-
       <%= simple_form_for(:filmmaker, :url => {:action => 'update', :id => @filmmaker.id}) do |f| %>
         <%= render(:partial => "form", :locals => {:f => f}) %>
       <% end %>

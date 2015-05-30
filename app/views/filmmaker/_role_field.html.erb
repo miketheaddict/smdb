@@ -1,0 +1,26 @@
+<div class="form-group form-inline fillWidth" style="display: inline;">
+	<div class="half-spacer field input-group fillHeight fillWidth" style="display: table;">
+		<div class="input-group">
+			<span class='input-group-btn' style="width:1%;">
+				<% film_array = Film.all.map { |film| [film.title + ' (' + film.year.to_s + ')', film.id] } %>
+				<% if defined? rol%>
+					<%= select_tag('roles[film_id][]', options_for_select(film_array, rol.film_id), :class => 'form-control') %>
+				<% else %>
+					<%= select_tag('roles[film_id][]', options_for_select(film_array), :class => 'form-control') %>
+				<% end %>
+			</span>
+			<span class="input-group" style="width:100%;">
+				<% if defined? rol%>
+					<%= text_field_tag('roles[credit][]', nil, :class => 'form-control fillWidth', value: rol.credit, placeholder:"Credit") %>
+				<% else %>
+					<%= text_field_tag('roles[credit][]', nil, :class => 'form-control fillWidth', placeholder:"Credit") %>
+				<% end %>
+			</span>
+			<span class="input-group-btn fillHeight" style="width:1%;">
+				<button class="btn btn-danger fillHeight btn-delete" type="button" style="padding-top:0px; padding-bottom:0px;" onclick="delField(this, \&quot;field\&quot;)">
+					<span class="glyphicon glyphicon-minus fillHeight" style="margin-top:6px;"></span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>

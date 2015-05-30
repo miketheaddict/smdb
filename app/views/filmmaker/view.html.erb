@@ -1,33 +1,18 @@
-<!--     <%= link_to("<< Back to Search", {:action => 'search'}, :class => 'back-link') %>
-    <%= link_to("Edit",{:action => 'edit' , :id => @filmmaker.id}, :class => 'action edit') %>
-
-    <div class="filmmakers show">
-      <h2><%= @filmmaker.firstName + " " + @filmmaker.lastName %></h2>
-
-      <table summary="Filmmaker detail view">
-        <tr>
-          <th>Bio</th>
-          <td><%= @filmmaker.bio %></td>
-        </tr>
-      </table>
-
-    </div>  -->
-
-    <div class="filmmaker view">
+<div class="filmmaker view">
   <div class="btn-group btn-group-justified" role="group" aria-label="...">
     <div class="btn-group" role="group">
       <%= link_to({:action => 'search'}, :class => 'back-link')do%>
-        <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Go Back</button>
+        <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-chevron-left"></span> Back to Search</button>
       <% end %>
     </div>
-    <div class="btn-group" role="group">
-      <span class="text-center"><h1> DETAILS </h1></span>
+    <div class="btn-group text-center" role="group">
+      <h1><span class="glyphicon glyphicon-user"><br></span></h1>
     </div>
     <div class="btn-group" role="group">
       <%= link_to({:action => 'edit', :id => @filmmaker.id}, :class => 'action edit')do%>
-        <button type="button" class="btn btn-success">Edit Filmmaker <span class="glyphicon glyphicon-pencil"></span></button>
+        <button type="button" class="btn btn-success">Edit Profile <span class="glyphicon glyphicon-pencil"></span></button>
       <% end %>
     </div>
   </div>
   <%= render(:partial => "details") %>
-</div> 
+</div>

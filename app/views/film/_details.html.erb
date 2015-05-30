@@ -67,29 +67,38 @@
           </div>
 
 
-          <!-- <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <% if @film.roles != nil && @film.roles.size > 0 then%>
+          <div class="row">
+            <div class="panel panel-default"  style="padding-left:0px;padding-right:0px;">
                 <a id="credits"></a>
-              <div class="well text-center">
+              <div class="panel-heading text-center">
                 <h3><b>Credits</b></h3>
-                <hr>
-                <% if @film.roles != nil && @film.roles.size > 0 then%>
-                  <%= @film.roles.each do |role|%>
+              </div>
+                <% lastRole = ""%>
+                  <% @film.roles.each do |role|%>
                     <%= link_to({:controller=>"filmmaker", :action=>"view", :id=>role.filmmaker.id.to_s}, :class=>"action filmmaker") do%>
-                      <div class="row">
+                      <div class="row hover-grey" style="padding-top:5px; padding-bottom:5px;">
+                          <% if lastRole != role.credit %>
+                          <br>
+                          <% end %>
                         <div class="col-md-6 credit text-right"><b>
-                          <%=role.credit%>
+                            <% if lastRole != role.credit %>
+                              <%=role.credit%>
+                              <% lastRole = role.credit%>
+                              <% if role.credit == ""%>
+                                Uncredited
+                              <% end %>
+                          <% end %>
                         </b></div>
                         <div class="col-md-6 credit text-left">
                           <%=role.filmmaker.firstName + " " + role.filmmaker.lastName%>
                         </div>
-                      </div>
+                  </div>
                     <% end %>
                   <% end %>
-                <% end %>
-              </div>
             </div>
-          </div> -->
+          </div>
+        <% end %>
 
           <% if @film.trivia != nil && @film.trivia.size > 0 then%>
           <div class="row">

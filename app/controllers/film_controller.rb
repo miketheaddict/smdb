@@ -1,7 +1,5 @@
 class FilmController < ApplicationController
 
-@selected_nav = "Films"
-
   def search
     @searchTerm = params[:search]
     if @searchTerm != nil
@@ -20,7 +18,7 @@ class FilmController < ApplicationController
 
   def add
     @film = Film.new({:title => "Movie Title", :year => Time.now.year})
-    @trivia_code = render_to_string(:partial => "application/trivia_field", :formats => [:html], :layout => false, :locals => {:filmmaker_id => "filmmaker_id"}).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
+    @trivia_code = render_to_string(:partial => "application/trivia_field", :formats => [:html], :layout => false).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
     @role_code = render_to_string(:partial => "film/role_field", :formats => [:html], :layout => false, :locals => {:filmmaker_id => "filmmaker_id"}).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
   end
 
@@ -30,8 +28,8 @@ class FilmController < ApplicationController
 
   def edit
     @film = Film.find(params[:id])
-    @trivia_code = render_to_string(:partial => "application/trivia_field", :formats => [:html], :layout => false, :locals => {:filmmaker_id => "filmmaker_id"}).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
-    @role_code = render_to_string(:partial => "film/role_field", :formats => [:html], :layout => false, :locals => {:filmmaker_id => "filmmaker_id"}).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
+    @trivia_code = render_to_string(:partial => "application/trivia_field", :formats => [:html], :layout => false).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
+    @role_code = render_to_string(:partial => "film/role_field", :formats => [:html], :layout => false).gsub!("\n", "\\\n" ).gsub!('"', "'").gsub!('&quot;', '"')
   end
 
   #C(R)UD
@@ -48,9 +46,21 @@ class FilmController < ApplicationController
         end
       end
     end
+    if params[:roles] != nil && params[:roles][:filmmaker_id] != nil
+        (0..params[:roles][:credit].length - 1).each do |i|
+            if params[:roles][:filmmaker_id][i] != nil
+                newRole = Role.new(:credit => params[:roles][:credit][i])
+                @film.roles << newRole
+                Filmmaker.find(params[:roles][:filmmaker_id][i]).roles << newRole
+            end
+        end
+    end
     if @film.save
         @film.trivia.each do |triv|
             triv.save
+        end
+        @film.roles.each do |role|
+            role.save
         end
      # If save succeeds, redirect to the index action
      flash[:notice] = "Film created successfully."
@@ -75,9 +85,27 @@ class FilmController < ApplicationController
         end
         @film.trivia.clear
 
-        if params[:trivia] != nil
+        if params[:trivia] != nil && params[:trivia].length > 0
             params[:trivia].each do |triv|
                 @film.trivia << Trivium.new(:body=>triv, :spoiler=>false);
+            end
+        end
+    end
+
+    if params[:roles] != nil || !@film.roles.empty?;
+        #a less than ideal way to update them
+        @film.roles.each do |role|
+            role.destroy
+        end
+        @film.roles.clear
+
+        if params[:roles] != nil && params[:roles][:filmmaker_id] != nil
+            (0..params[:roles][:credit].length - 1).each do |i|
+                if params[:roles][:filmmaker_id][i] != nil
+                    newRole = Role.new(:credit => params[:roles][:credit][i])
+                    @film.roles << newRole
+                    Filmmaker.find(params[:roles][:filmmaker_id][i]).roles << newRole
+                end
             end
         end
     end
@@ -85,6 +113,9 @@ class FilmController < ApplicationController
     if @film.update_attributes(film_params)
         @film.trivia.each do |triv|
             triv.save
+        end
+        @film.roles.each do |role|
+            role.save
         end
         # If update succeeds, redirect to the index action
         flash[:notice] = "Film updated successfully."
@@ -101,6 +132,10 @@ class FilmController < ApplicationController
     film = Film.find(params[:id])
     film.trivia.each do |triv|
         triv.destroy
+    end
+
+    film.roles.each do |role|
+        role.destroy
     end
     film.destroy
     flash[:notice] = "#{film.title} (#{film.year}) destroyed successfully."

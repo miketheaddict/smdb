@@ -4,25 +4,45 @@
 
 <div class="row">
     <div class="col-md-12">
+        <div class="text-center header jumbotron" style="margin-bottom: 0px;">
+            <h1><%= @filmmaker.firstName + " " + @filmmaker.lastName%></h1>
+        </div>
+
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" onclick="smooth_scroll('#details')">Details</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" onclick="smooth_scroll('#bio')">Bio</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" onclick="smooth_scroll('#credits')">Credits</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" onclick="smooth_scroll('#trivia')">Trivia</button>
+            </div>
+        </div>
+
         <div class="well well-sm">
             <form class="form-horizontal" method="post">
                 <fieldset>
-                  <legend class="text-center header jumbotron"> <h1><%= @filmmaker.firstName + " " + @filmmaker.lastName%></h1></legend>
 
+                        <a id="details"></a>
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Birthday</label>
                       <div class="col-md-8 half-spacer">
-                        <div class="well well-sm"><%= if @filmmaker.birthDate == nil then "They were never born!" else @filmmaker.birthDate end%></div>
+                        <div class="well well-sm"><%= if @filmmaker.birthDate == nil then "No Birthday Provided" else @filmmaker.birthDate end%></div>
                       </div>
                   </div>
 
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">School</label>
                       <div class="col-md-8 half-spacer">
-                        <div class="well well-sm"><%= if @filmmaker.school == nil || @filmmaker.school.length == 0 then "A Freelancer!" else @filmmaker.school + "(" + @filmmaker.year.to_s + ")" end%></div>
+                        <div class="well well-sm"><%= if @filmmaker.school == nil || @filmmaker.school.length == 0 then "None" else @filmmaker.school + " (" + @filmmaker.year.to_s + ")" end%></div>
                       </div>
                   </div>
 
+                      <a id="bio"></a>
                   <div class="form-group">
                       <label class="form-label col-md-1 col-md-offset-2 text-center spacer" for="title">Bio</label>
                       <div class="col-md-8 half-spacer">
@@ -32,6 +52,58 @@
 
                 </fieldset>
             </form>
+
+              <% if @filmmaker.roles != nil && @filmmaker.roles.size > 0 then%>
+            <div class="row">
+              <div class="panel panel-default"  style="padding-left:0px;padding-right:0px;">
+                  <a id="credits"></a>
+                <div class="panel-heading text-center">
+                  <h3><b>Credits</b></h3>
+                </div>
+                  <% lastFilm = ""%>
+                    <% @filmmaker.roles.each do |role|%>
+                      <%= link_to({:controller=>"film", :action=>"view", :id=>role.film.id.to_s}, :class=>"action filmmaker") do%>
+                        <div class="row hover-grey" style="padding-top:5px; padding-bottom:5px;">
+                            <% if lastFilm != role.film_id %>
+                            <br>
+                            <% end %>
+                          <div class="col-md-6 credit text-right"><b>
+                              <% if lastFilm != role.film_id %>
+                                <%=role.film.title + " (" + role.film.year.to_s + ")"%>
+                                <% lastFilm = role.film_id%>
+                            <% end %>
+                          </b></div>
+                          <div class="col-md-6 credit text-left">
+                            <%=role.credit%>
+
+                            <% if role.credit == ""%>
+                              Uncredited
+                            <% end %>
+                          </div>
+                    </div>
+                      <% end %>
+                    <% end %>
+              </div>
+            </div>
+          <% end %>
+
+            <% if @filmmaker.trivia != nil && @filmmaker.trivia.size > 0 then%>
+            <div class="row">
+              <div class="panel panel-default col-md-6 col-md-offset-3 text-center" style="padding-left:0px;padding-right:0px;">
+                  <a id="trivia"></a>
+                  <div class="panel-heading">
+                      <h3><b>Trivia</b></h3>
+                  </div>
+                  <div class="list-group list-hover">
+                    <% @filmmaker.trivia.each do |trivia|%>
+                      <li class="list-group-item">
+                        <%=trivia.body%>
+                      </li>
+                    <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
 
     </div>
 </div>
